@@ -14,9 +14,31 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+  $('#emailStatus').hide(); // Add this line to initially hide the message
+  $('input[name="email"]').on('input', function() {
+    var email = $(this).val();
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var gmailReg = /^([\w-\.]+@gmail.com)?$/;
+    if(email !== "" && emailReg.test(email) && gmailReg.test(email)) {
+      $('#emailStatus').css('color', 'green').text('✓ Email Verified').show();
+    } else {
+      $('#emailStatus').css('color', 'red').text('✗ Invalid Email Id').show();
+    }
+  });
 
+  $('input[name="phone"]').on('input', function() {
+    var phone = $(this).val();
+    if(phone.length > 10) {
+      $(this).val(phone.slice(0, 10));
+    }
+  });
+});
 
+    </script>
   </head>
+
 
   <body>
     <!-- ################# Header #######################--->
@@ -112,27 +134,7 @@
             </ul>
             </div>
           </div>
-<script>
-$(document).ready(function(){
-  $('input[name="email"]').on('input', function() {
-    var email = $(this).val();
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var gmailReg = /^([\w-\.]+@gmail.com)?$/;
-    if(emailReg.test(email) && gmailReg.test(email)) {
-      $('#emailStatus').css('color', 'green').text('✓ Email Verified');
-    } else {
-      $('#emailStatus').css('color', 'red').text('✗ Invalid Email Id');
-    }
-  });
 
-  $('input[name="phone"]').on('input', function() {
-    var phone = $(this).val();
-    if(phone.length > 10) {
-      $(this).val(phone.slice(0, 10));
-    }
-  });
-});
-</script>
           <form action="#" th:action="@{/contact}" th:object="${contactForm}" method="post">
   <div class="row">
     <div class="col-sm-3">
